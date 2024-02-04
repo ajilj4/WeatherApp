@@ -1,0 +1,40 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.box{
+    padding: 5% ;
+    background-color: blue;
+    height: 100%;
+}
+
+.cloud,.temp{
+    display: flex;
+    color: white;
+    justify-content: center;  
+}
+
+.temp p{
+    font-size: 8rem;
+}
+
+.country h1{
+    text-align: center;
+    color: white;
+    font-size: 4rem;
+}
+
+.lastbox{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.leftbox,.rightbox{
+    display: flex;
+    flex-direction: row;
+    width: 250px;
+    justify-content: space-around;
+} 
+
