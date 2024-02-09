@@ -6,8 +6,10 @@
 
 .box{
     padding: 5% ;
-    background-color: blue;
-    height: 100%;
+    background-image: linear-gradient(rgb(0, 0, 8), rgb(93, 93, 238));
+  /* background-image: linear-gradient(135deg, rgba(2, 1, 18, 5), rgb(93, 93, 238)); */
+  /* background: linear-gradient(135deg, rgb(10, 8, 89) 30%,rgb(86, 19, 219), rgb(130, 75, 241)); */
+    height: 100vh;
 }
 
 .cloud,.temp{
