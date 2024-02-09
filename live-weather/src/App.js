@@ -13,15 +13,16 @@ import axios from "axios"
 import { useLayoutEffect } from "react";
 import Spinner from 'react-bootstrap/Spinner';
 import { useDispatch,useSelector } from "react-redux";
-import { setalldata } from "./reducer/userslice";
+import { setalldata ,setweatherdata} from "./reducer/userslice";
 
 function App() {
   
   let alldata = useSelector((state) => state.counter.alldata)
+  let weatherdata = useSelector((state) => state.counter.weatherdata)
   let dispatch = useDispatch()
   // const [alldata,setalldata]= useState("")
   const [allapidata,setallapidata]= useState([])
-  const [weatherdata,setweatherdata]= useState([])
+  
   
   let [istrue,setistrue] = useState(false)
 
@@ -62,7 +63,7 @@ function App() {
     if (alldata != ""){
       axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=924b07222b465adc91ca511e1ac899fe&units=Metric`).then((res)=>{
       console.log(res)
-      setweatherdata(res.data)
+      dispatch(setweatherdata(res.data))
       setallapidata(res.data)
       setistrue(true)
     })
