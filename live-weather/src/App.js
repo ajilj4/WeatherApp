@@ -3,17 +3,26 @@ import ColorSchemesExample from './components/nav'
 import FormExample from './components/search'
 import "./app.css"
 import cloud from './Assets/cloud.png'
+import clear from './Assets/clear.png'
+import rain from './Assets/rain.png'
+import snow from './Assets/snow.png'
+import drizzle from './Assets/drizzle.png'
 import humidity from './Assets/humidity.png'
 import wind from './Assets/wind.png'
 import axios from "axios"
 import { useLayoutEffect } from "react";
 import Spinner from 'react-bootstrap/Spinner';
+import { useDispatch,useSelector } from "react-redux";
+import { setalldata } from "./reducer/userslice";
 
 function App() {
-
-  const [alldata,setalldata]= useState("")
+  
+  let alldata = useSelector((state) => state.counter.alldata)
+  let dispatch = useDispatch()
+  // const [alldata,setalldata]= useState("")
   const [allapidata,setallapidata]= useState([])
   const [weatherdata,setweatherdata]= useState([])
+  
   let [istrue,setistrue] = useState(false)
 
   let loc = alldata.split(" ");
@@ -45,7 +54,7 @@ function App() {
   useLayoutEffect(()=>{
     axios.get(`https://api.geoapify.com/v1/ipinfo?&apiKey=bdae5ff1e27846269261bd40b674a456`).then((res)=>{
       console.log(res)
-      setalldata(res.data.city.name)
+      dispatch(setalldata(res.data.city.name))
     })
   },[])
 
@@ -66,12 +75,23 @@ console.log("weather",weatherdata)
   return (
     <div className="App" style={{maxHeight: "100vh"}}>
       <ColorSchemesExample/>
+      
       {alldata!="" && istrue ?<div className="box">
-         
-      <FormExample/>
+      <FormExample />
       
       <div className="cloud">
-          <img src={cloud} alt="cloud"/>
+          {weatherdata.list[0].weather[0].main=="Clouds"?
+          <img src={cloud} alt="cloud"/>:
+          weatherdata.list[0].weather[0].main=="Clear"?
+          <img src={clear} alt="clear"/>:
+          weatherdata.list[0].weather[0].main=="Snow"?
+          <img src={snow} alt="snow"/>:
+          weatherdata.list[0].weather[0].main=="Rain"?
+          <img src={rain} alt="rain"/>:
+          // weatherdata.list[0].weather[0].main=="drizzle"?
+          <img src={drizzle} alt="drizzle"/>
+        }
+          
           
       </div>
       <div className="temp">
@@ -98,9 +118,11 @@ console.log("weather",weatherdata)
         </div>
 
       </div>
-      </div>:<Spinner animation="border" role="status" style={{display:"flex",justifyContent:"center",height:"100vh",alignItems:"center"}}>
+      </div>:<div style={{width:"100%",height:"100vh",position:"relative"}}>
+      <Spinner animation="border" role="status" style={{width:"100px",height:"100px",left:"45%",bottom:"50%",position:"absolute"}}>
       <span className="visually-hidden" >Loading...</span>
-    </Spinner>}
+    </Spinner>
+    </div>}
       
     </div>
   );

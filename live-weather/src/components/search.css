@@ -1,0 +1,26 @@
+.inputsize{
+    width: calc(80% - -50px);
+    
+    /* background-color: aqua; */
+    /* height: 100px; */
+}
+.inputbox{
+    height: 70px;
+    border-radius: 50px;
+    /* border-radius: ; */
+    font-size: xx-large;
+}
+.inputbox::placeholder{
+    font-size:x-large;
+   
+}
+.search-box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.search-button{
+    height: 70px;
+    width: 70px;
+}
