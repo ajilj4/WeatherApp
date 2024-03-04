@@ -57,7 +57,7 @@ return (
         <h1>Enter City Name Correctly</h1>
         <button className="btn btn-primary mt-5" onClick={()=>setapisearch(false)}>back</button>
         </div>
-      </div>: istrue ?<div className="box">
+      </div>:alldata!="" && istrue ?<div className="box">
       <FormExample />
     
       <div className="cloud">
