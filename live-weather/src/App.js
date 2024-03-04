@@ -14,43 +14,20 @@ import { useLayoutEffect } from "react";
 import Spinner from 'react-bootstrap/Spinner';
 import { useDispatch,useSelector } from "react-redux";
 import { setalldata ,setweatherdata} from "./reducer/userslice";
+import { Button } from "bootstrap";
 
 function App() {
   
+  let dispatch = useDispatch()
   let alldata = useSelector((state) => state.counter.alldata)
   let weatherdata = useSelector((state) => state.counter.weatherdata)
-  let dispatch = useDispatch()
-  // const [alldata,setalldata]= useState("")
   const [allapidata,setallapidata]= useState([])
-  
-  
   let [istrue,setistrue] = useState(false)
+  let [apisearch,setapisearch]=useState(false)
 
   let loc = alldata.split(" ");
   let location = loc[0];
-  console.log("hhh",location)
-
-  // if ("geolocation" in navigator) {
-  //   // Get the current position
-  //   navigator.geolocation.getCurrentPosition(
-  //     // Success callback
-  //     function(position) {
-  //       const latitude = position.coords.latitude;
-  //       const longitude = position.coords.longitude;
-        
-  //       console.log("Latitude: " + latitude);
-  //       console.log("Longitude: " + longitude);
-        
-  //       // You can use these coordinates to display a map, find nearby places, etc.
-  //     },
-  //     // Error callback
-  //     function(error) {
-  //       console.error("Error getting geolocation:", error.message);
-  //     }
-  //   );
-  // } else {
-  //   console.error("Geolocation is not supported by this browser.");
-  // }
+  // console.log("hhh",location)
 
   useLayoutEffect(()=>{
     axios.get(`https://api.geoapify.com/v1/ipinfo?&apiKey=bdae5ff1e27846269261bd40b674a456`).then((res)=>{
@@ -66,20 +43,23 @@ function App() {
       dispatch(setweatherdata(res.data))
       setallapidata(res.data)
       setistrue(true)
-    })
+    }).catch((err)=>{setapisearch(true)})
     }
   },[alldata])   
+  
 
-console.log(alldata)
-console.log(allapidata)
-console.log("weather",weatherdata)
-  return (
+return (
     <div className="App" style={{maxHeight: "100vh"}}>
       <ColorSchemesExample/>
       
-      {alldata!="" && istrue ?<div className="box">
+      {apisearch?<div >
+        <div className="apierror">
+        <h1>Enter City Name Correctly</h1>
+        <button className="btn btn-primary mt-5" onClick={()=>setapisearch(false)}>back</button>
+        </div>
+      </div>: istrue ?<div className="box">
       <FormExample />
-      
+    
       <div className="cloud">
           {weatherdata.list[0].weather[0].main=="Clouds"?
           <img src={cloud} alt="cloud"/>:
